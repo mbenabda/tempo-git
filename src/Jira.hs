@@ -86,7 +86,8 @@ logOne conf (WorkLog d i h) = do
       request = request'
                   { method = "POST"
                   , requestBody = (RequestBodyLBS (encode json))
-                  }
+                  , requestHeaders = (requestHeaders request') ++ [ ("Content-Type", "application/json") ]
+                  } 
   manager <- newManager tlsManagerSettings
   runResourceT $ do
     response <- http request manager
